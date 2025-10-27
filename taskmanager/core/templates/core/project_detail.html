@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ project.name }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ project.name }}</h1>
+  <p>{{ project.description }}</p>
+  <a href="{% url 'add_task' project.pk %}" class="btn">+ Add Task</a>
+</div>
+
+<h2>Tasks</h2>
+{% if tasks %}
+  {% for task in tasks %}
+    <div class="task-item">
+      <div>
+        <div class="task-title">{{ task.title }}</div>
+        <div class="task-meta">{{ task.status }} | Priority: {{ task.priority }}</div>
+      </div>
+      {% if task.assigned_to %}
+        <span class="task-meta">👤 {{ task.assigned_to.username }}</span>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p class="empty">No tasks yet.</p>
+{% endif %}
+{% endblock %}
